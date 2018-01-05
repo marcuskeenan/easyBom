@@ -1,8 +1,7 @@
-### Pup
-A boilerplate for products.
+### easyBom
+A Bill of Materials management system.
 
-[Read the Documentation](http://cleverbeagle.com/pup)
+
 
 ---
 
-Need help and want to stay accountable building your product? [Check out Clever Beagle](http://cleverbeagle.com).
