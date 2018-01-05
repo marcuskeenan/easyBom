@@ -1,0 +1,41 @@
+.Documents table tbody tr td {
+  //vertical-align: middle;
+}
+
+
+.img-tn {
+  // display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 8px;
+  //vertical-align: top;
+  //border-top: 1px solid rgb(221, 221, 221);
+  /*border-top: 1px solid #ddd;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  */
+}
+
+.react-bs-table-container {
+.react-bs-table table td, .react-bs-table table th {
+  white-space: normal;
+  //text-overflow: unset;
+  //overflow-wrap: break-word;
+  //border-top-style: hidden !important;
+}
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+background-color: #f9f9f9;
+}
+
+ol {
+display: block;
+list-style-type: decimal;
+-webkit-margin-before: 0em;
+-webkit-margin-after: 2em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 20px;
+}

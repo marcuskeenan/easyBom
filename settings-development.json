@@ -1,0 +1,23 @@
+{
+  "public": {},
+  "private": {
+    "MAIL_URL": "",
+    "OAuth": {
+      "facebook": {
+        "appId": "1399972683650114",
+        "secret": "c7c53bfa0e0711881ccf3843e560a053",
+        "loginStyle": "popup"
+      },
+      "google": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+      "github": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      }
+    }
+  }
+}
