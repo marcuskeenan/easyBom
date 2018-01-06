@@ -22,8 +22,9 @@ class BomPartsTable extends React.Component {
       bomId: this.props.bomId,
 
     };
+
+    //this.onBeforeSaveCell = this.onBeforeSaveCell.bind(this);
     /*
-    this.handleDelete = this.handleDelete.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     */
@@ -96,6 +97,10 @@ class BomPartsTable extends React.Component {
     };
 
     function onAfterSaveCell(row, cellName, cellValue) {
+
+    }
+
+    function onBeforeSaveCell(row, cellName, cellValue) {
       const partId = row.id;
       const qty = parseFloat(cellValue);
       const part = { id: partId, quantity: qty };
@@ -108,12 +113,6 @@ class BomPartsTable extends React.Component {
           console.log("The update didn't work");
         }
       });
-    }
-
-    function onBeforeSaveCell(row, cellName, cellValue) {
-      // You can do any validation on here for editing value,
-      // return false for reject the editing
-      // const bomId = bomId;
 
       return true;
     }
@@ -134,7 +133,6 @@ class BomPartsTable extends React.Component {
             deleteRow
           >
             <TableHeaderColumn dataField="id" isKey searchable={false} export>Bom ID</TableHeaderColumn>
-            <TableHeaderColumn width="20%" dataField="id">ID</TableHeaderColumn>
             <TableHeaderColumn width="10%" dataField="id" dataFormat={imageFormatter}>Image</TableHeaderColumn>
             <TableHeaderColumn width="30%" dataField="id" dataFormat={getPartName} dataSort>Part Name</TableHeaderColumn>
             <TableHeaderColumn width="30%" dataField="id" dataFormat={getPartManufacturer} dataSort>Manufacturer</TableHeaderColumn>

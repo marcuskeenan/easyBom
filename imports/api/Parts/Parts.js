@@ -77,6 +77,7 @@ Parts.schema = new SimpleSchema({
   tags: {
     type: Array,
     label: 'The tags for the document.',
+    defaultValue: [],
     optional: true,
   },
   'tags.$': {

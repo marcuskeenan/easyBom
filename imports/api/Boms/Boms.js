@@ -53,11 +53,11 @@ Boms.schema = new SimpleSchema({
     type: Object,
     label: 'A user who has favorited this document.',
   },
-  'parts.id$': {
+  'parts.$.id': {
     type: String,
     label: 'A user who has favorited this document.',
   },
-  'parts.quantity$': {
+  'parts.$.quantity': {
     type: Number,
     label: 'A user who has favorited this document.',
   },

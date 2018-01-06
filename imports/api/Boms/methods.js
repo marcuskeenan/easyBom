@@ -88,14 +88,8 @@ Meteor.methods({
     check(bomId, String);
     check(part, Object);
     try {
-      //const bom = Boms.findOne({ _id: bomId });
-      console.log(`the bom id is ${bomId}, the part id is ${part.id} and the qty is ${part.quantity}`);
-      //const hasPartAlready = true;// bom.parts.indexOf({ id: { $in: this.part.id } });
-      //console.log(`hasPartAlready = ${hasPartAlready}`);
-      // Boms.update(bomId, { [hasPartAlready ? '$set' : '$addToSet']: { parts: this.part } });
-      // Boms.update(bomId, { [hasPartAlready ? '$set' : '$addToSet']: { parts: part } });
+      //  console.log(`the bom id is ${bomId}, the part id is ${part.id} and the qty is ${part.quantity}`);
       Boms.update({ _id: bomId, 'parts.id': part.id }, { $set: { 'parts.$.quantity': part.quantity } });
-      //Boms.update({ _id: 'YTW5DHdq9wrMPD9yw', 'parts.id': 'jhcHNhFYnc7XSaTYb' }, { $set: { 'parts.$.quantity': 88 } });
       console.log('done');
     } catch (exception) {
       console.warn(exception);

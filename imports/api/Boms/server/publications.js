@@ -53,4 +53,3 @@ Meteor.publish('boms.view', function documentsView(documentId, isEditing) {
     Meteor.users.find({ _id: { $in: comments.fetch().map(({ author }) => author) } }, { profile: { profile: 1 } }),
   ];
 });
-
