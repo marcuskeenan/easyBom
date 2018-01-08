@@ -13,23 +13,43 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { timeago, monthDayYearAtTime } from '../../../modules/dates';
 
 
-class BomPartsTable extends React.Component {
+class PartsTable extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       parts: this.props.parts,
       bomId: this.props.bomId,
+      data: [],
 
     };
-
-    //this.onBeforeSaveCell = this.onBeforeSaveCell.bind(this);
-    /*
-    this.handleAddition = this.handleAddition.bind(this);
-    this.handleDrag = this.handleDrag.bind(this);
-    */
   }
 
+  getPartsData(parts) {
+    const dataRows = [];
+    parts.map(p => {
+      const part = Parts.findOne({ _id: p.id });
+      const quantity = p.quantity;
+      const row = {
+        id: p.id,
+        image: part.imageURL,
+        name: part.name,
+        manufacturer: part.manufacturer,
+        manPartNumber: part.manPartNumber,
+        cost: priceFormatter(part.cost),
+        quantity: quantity,
+        total: priceFormatter(parseFloat(part.cost * quantity).toFixed(2)),
+      }
+      console.log(row);
+      dataRows.push(row);
+
+    });
+    this.setState({dataRows});
+  }
+
+  componentDidMount() {
+    getPartsData(this.state.parts)
+  }
   render() {
     const { parts, bomId } = this.state;
 
@@ -51,55 +71,28 @@ class BomPartsTable extends React.Component {
       afterDeleteRow: onAfterDeleteRow,
     };
 
-    const getPartName = (id) => {
-      const partName = Parts.findOne({ _id: id }).name;
-      return <Link to={{ pathname: `/parts/${id}` }}>{partName}</Link>;
+    const getPartName = (cell, row) => {
+      const name = cell;
+      const id = row.id;
+      return <Link to={{ pathname: `/parts/${id}` }}>{name}</Link>;
     };
 
-    const getPartDescription = (id) => {
-      const partDescription = Parts.findOne({ _id: id }).description;
-      return `${partDescription}`;
-    };
 
-    const getPartManufacturer = (id) => {
-      const partManufacturer = Parts.findOne({ _id: id }).manufacturer;
-      return `${partManufacturer}`;
-    };
-
-    const getPartMPN = (id) => {
-      const partMPN = Parts.findOne({ _id: id }).manPartNumber;
-      return `${partMPN}`;
-    };
-
-    const imageFormatter = (id) => {
-      const image = Parts.findOne({ _id: id }).imageURL;
-      return <img className="img-tn" src={image} alt="pic" />;
+    const imageFormatter = (url) => {
+      return <img className="img-tn" src={url} alt="pic" />;
     };
 
     const priceFormatter = (value) => {
       if (isNaN(`${value}`)) {
         return 'no cost listed';
       }
-      return `<i>$</i>${value}`;
+      return `$${value}`;
     };
 
-    const getPartCost = (id, format = true) => {
-      const cost = Parts.findOne({ _id: id }).cost;
-      if (format) {
-        return priceFormatter(`${cost}`);
-      }
-      return `${cost}`;
-    };
-
-    const getCostTotal = (cell, row) => {
-      const cost = parseFloat(getPartCost(cell, false));
-      const qty = parseFloat(row.quantity);
-      const total = parseFloat(cost * qty).toFixed(2);
-      return priceFormatter(total);
-    };
 
     function onAfterSaveCell(row, cellName, cellValue) {
-
+      //this.setState(this.state);
+      getPartsData(this.state.data);
     }
 
     function onBeforeSaveCell(row, cellName, cellValue) {
@@ -129,12 +122,14 @@ class BomPartsTable extends React.Component {
       alert('The rowkey you drop: ' + rowKeys);
     }
 
+
+
     return (
       <div>
         {bomId}
         <span><h3>Parts</h3>
           <BootstrapTable
-            data={parts}
+            data={this.state.data}
             deleteRow={ true }
             cellEdit={cellEditProp}
             selectRow={selectRow}
@@ -145,14 +140,14 @@ class BomPartsTable extends React.Component {
             insertRow
             deleteRow
           >
-            <TableHeaderColumn dataField="id" isKey searchable={false} export>Bom ID</TableHeaderColumn>
-            <TableHeaderColumn width="10%" dataField="id" dataFormat={imageFormatter}>Image</TableHeaderColumn>
-            <TableHeaderColumn width="30%" dataField="id" dataFormat={getPartName} dataSort>Part Name</TableHeaderColumn>
-            <TableHeaderColumn width="30%" dataField="id" dataFormat={getPartManufacturer} dataSort>Manufacturer</TableHeaderColumn>
-            <TableHeaderColumn width="20%" dataField="id" dataFormat={getPartMPN} dataSort>MPN</TableHeaderColumn>
+            <TableHeaderColumn dataField="id" isKey searchable={false} export>id</TableHeaderColumn>
+            <TableHeaderColumn width="10%" dataField="image" dataFormat={imageFormatter}>Image</TableHeaderColumn>
+            <TableHeaderColumn width="30%" dataField="name" dataSort dataFormat={getPartName}>Part Name</TableHeaderColumn>
+            <TableHeaderColumn width="30%" dataField="manufacturer" dataSort>Manufacturer</TableHeaderColumn>
+            <TableHeaderColumn width="20%" dataField="manPartNumber" dataSort>MPN</TableHeaderColumn>
             <TableHeaderColumn width="10%" dataField="quantity">QTY</TableHeaderColumn>
-            <TableHeaderColumn width="10%" dataField="id" dataFormat={getPartCost}>Cost</TableHeaderColumn>
-            <TableHeaderColumn width="10%" dataField="id" dataFormat={getCostTotal}>Total</TableHeaderColumn>
+            <TableHeaderColumn width="10%" dataField="cost">Cost</TableHeaderColumn>
+            <TableHeaderColumn width="10%" dataField="total">Total</TableHeaderColumn>
           </BootstrapTable>
 
         </span>
@@ -161,16 +156,16 @@ class BomPartsTable extends React.Component {
   }
 }
 
-BomPartsTable.defaultProps = {
+PartsTable.defaultProps = {
   parts: [],
   bomId: { _id: '' },
 
 };
 
-BomPartsTable.propTypes = {
+PartsTable.propTypes = {
   parts: PropTypes.array,
   bomId: PropTypes.string,
 };
 
 
-export default BomPartsTable;
+export default PartsTable;

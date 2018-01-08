@@ -1,0 +1,28 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://easybom:<#Easybom98387>@ds042688.mlab.com:42688/lyricaldb"
+    }
+  },
+  "public": {},
+  "private": {
+    "MAIL_URL": "",
+    "OAuth": {
+      "facebook": {
+        "appId": "1399972683650114",
+        "secret": "c7c53bfa0e0711881ccf3843e560a053",
+        "loginStyle": "popup"
+      },
+      "google": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+      "github": {
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+    }
+  }
+}

@@ -42,27 +42,6 @@ const options = {
 const linkFormatter = (cell, row) => (<Link to={`boms/${row._id}`}>{cell}</Link>);
 
 
-/*
-const priceFormatter = (cell) => {
-  if (isNaN(`${cell}`)) {
-    return 'no cost listed';
-  }
-  return `<i>$</i>${cell}`;
-};
-
-
-const tagParser = (cell, row) => {
-  let data = '<ol>\n';
-
-  cell.map((tag) => {
-    console.log(tag.id, tag.text);
-    data += `<li>${tag.text}\n</li>`;
-  });
-  data += '</ol>';
-  return data;
-};
-*/
-
 const getOwnerName = (cell, row) => {
   const test = JSON.stringify(row);
   console.log(`${test}`);
@@ -122,4 +101,3 @@ export default withTracker(() => {
     users: Meteor.users.find().fetch(),
   };
 })(Boms);
-

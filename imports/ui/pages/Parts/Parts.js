@@ -76,19 +76,20 @@ const Parts = ({
         selectRow={selectRow}
         options={options}
         search
+        bordered={ false }
         multiColumnSearch
         exportCSV
         insertRow
         deleteRow
       >
         <TableHeaderColumn dataField="_id" isKey searchable={false} hidden export>Part ID</TableHeaderColumn>
-        <TableHeaderColumn width="15%" dataField="imageURL" dataFormat={imageFormatter}>Image</TableHeaderColumn>
-        <TableHeaderColumn width="30%" dataField="name" dataFormat={linkFormatter}>Part Name</TableHeaderColumn>
-        <TableHeaderColumn width="10%" dataField="manufacturer">Manufacturer</TableHeaderColumn>
-        <TableHeaderColumn width="15%" dataField="manPartNumber">MPC</TableHeaderColumn>
-        <TableHeaderColumn width="10%" dataField="vendor" dataSort>Vendor</TableHeaderColumn>
-        <TableHeaderColumn width="10%" dataField="cost" dataSort dataFormat={priceFormatter}>Cost</TableHeaderColumn>
-        <TableHeaderColumn width="10%" dataField="tags" dataFormat={tagParser} dataSort>Tags</TableHeaderColumn>
+        <TableHeaderColumn width="15%" dataField="imageURL" dataFormat={imageFormatter} dataAlign='left'>Image</TableHeaderColumn>
+        <TableHeaderColumn width="30%" dataField="name" dataFormat={linkFormatter} dataAlign='left'>Part Name</TableHeaderColumn>
+        <TableHeaderColumn width="10%" dataField="manufacturer" dataAlign='left'>Manufacturer</TableHeaderColumn>
+        <TableHeaderColumn width="15%" dataField="manPartNumber" dataAlign='left'>MPC</TableHeaderColumn>
+        <TableHeaderColumn width="10%" dataField="vendor" dataSort dataAlign='left'>Vendor</TableHeaderColumn>
+        <TableHeaderColumn width="10%" dataField="cost" dataSort dataFormat={priceFormatter} dataAlign='left'>Cost</TableHeaderColumn>
+        <TableHeaderColumn width="10%" dataField="tags" dataFormat={tagParser} dataSort dataAlign='left'>Tags</TableHeaderColumn>
 
 
       </BootstrapTable>

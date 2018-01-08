@@ -96,6 +96,20 @@ Meteor.methods({
       throw new Meteor.Error('500', exception);
     }
   },
+  'boms.deletePart': function bomsDeletePart(bomId, rowKeys) {
+    check(bomId, String);
+    check(rowKeys, Array);
+    try {
+      rowKeys.forEach(function(element) {
+        console.log(element);
+        Boms.update({ _id: bomId }, { $pull: { parts: { id: element } } } );
+        console.log('done');
+      });
+    } catch (exception) {
+      console.warn(exception);
+      throw new Meteor.Error('500', exception);
+    }
+  },
 
 });
 
