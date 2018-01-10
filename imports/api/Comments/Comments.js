@@ -18,7 +18,7 @@ Comments.deny({
 const CollectionSchema = new SimpleSchema({
   documentId: {
     type: String,
-    label: 'The ID of the document this comment belongs to.',
+    label: 'The ID of the document this comment belongs to ',
   },
   author: {
     type: String,

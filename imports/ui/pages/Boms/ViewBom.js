@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { Counts } from 'meteor/tmeasday:publish-counts';
 import { Link } from 'react-router-dom';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn, InsertButton } from 'react-bootstrap-table';
 import { timeago, monthDayYearAtTime } from '../../../modules/dates';
 import Boms from '../../../api/Boms/Boms';
 import Parts from '../../../api/Parts/Parts';
@@ -55,6 +55,12 @@ const popoverHoverFavorite = (
   </Popover>
 );
 
+const popoverHoverAdd = (
+  <Popover id="popover-trigger-hover-focus" title="Go for it!">
+    <strong>Click here to add parts to your bom!</strong>
+  </Popover>
+);
+
 const getOwnerName = (id) => {
   const name = Meteor.users.findOne(id).profile.name;
   return `${name.first} ${name.last}`;
@@ -82,6 +88,8 @@ const options = {
   clearSearch: true,
   afterDeleteRow: onAfterDeleteRow,
 };
+
+
 
 const getPartName = (cell, row) => {
   const name = cell;
@@ -237,17 +245,14 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
             {doc.parts.length ? <div /> : <Alert bsStyle="warning">No parts have been add to the BOM!</Alert>}
             <BootstrapTable
               data={getPartsData(doc)}
-              // deleteRow={ true }
+
               cellEdit={cellEditProp}
-              // selectRow={selectRow}
+              selectRow={selectRow}
               options={options}
               search
               multiColumnSearch
               bordered={ false }
               exportCSV
-              //csvFileName='table-export'
-              insertRow
-              // deleteRow
             >
               <TableHeaderColumn dataField="id" isKey hidden searchable={false} export>id</TableHeaderColumn>
               <TableHeaderColumn dataField="bomId" hidden searchable={false}>bomId</TableHeaderColumn>
@@ -262,8 +267,16 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
             </BootstrapTable>
 
           </div>
+
           <div className="row">
             <hr />
+            <div className="float-md-right pull-right">
+              <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={popoverHoverAdd}>
+                <Button className="btn btn-primary">
+                  <i className="fa fa-plus fa-md" /> Add Parts
+                </Button>
+              </OverlayTrigger>
+            </div>
             <div className="float-md-left pull-left">
               <Tags
                 documentId={doc._id}

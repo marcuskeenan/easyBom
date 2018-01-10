@@ -71,8 +71,7 @@ const Boms = ({
         search
         multiColumnSearch
         exportCSV
-        insertRow
-        deleteRow
+        bordered={ false }
       >
         <TableHeaderColumn dataField="_id" isKey searchable={false} hidden export>Bom ID</TableHeaderColumn>
         <TableHeaderColumn width="30%" dataField="name" dataFormat={linkFormatter}>Bom Name</TableHeaderColumn>
