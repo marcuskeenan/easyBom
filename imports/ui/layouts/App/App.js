@@ -48,6 +48,7 @@ import Boms from '../../pages/Boms/Boms';
 import NewBom from '../../pages/Boms/NewBom';
 import ViewBom from '../../pages/Boms/ViewBom';
 import EditBom from '../../pages/Boms/EditBom';
+import AddPartsToBom from '../../pages/Boms/AddPartsToBom';
 
 
 import './App.scss';
@@ -84,6 +85,7 @@ const App = props => (
             <Authenticated exact path="/boms/new" component={NewBom} {...props} />
             <Authenticated exact path="/boms/:_id" component={ViewBom} {...props} />
             <Authenticated exact path="/boms/:_id/edit" component={EditBom} {...props} />
+            <Authenticated exact path="/boms/:_id/bomaddparts" component={AddPartsToBom} {...props} />
 
             <Authenticated exact path="/profile" component={Profile} {...props} />
             <Authenticated exact path="/notifications" component={Notifications} {...props} />

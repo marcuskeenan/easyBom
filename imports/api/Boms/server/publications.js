@@ -35,17 +35,17 @@ Meteor.publishComposite('boms.list', {
 });
 
 // Note: boms.view is also used when editing an existing bom.
-Meteor.publish('boms.view', function documentsView(documentId, isEditing) {
-  check(documentId, String);
+Meteor.publish('boms.view', function bomsView(bomId, isEditing) {
+  check(bomId, String);
   check(isEditing, Match.Maybe(Boolean));
 
-  const query = { _id: documentId };
+  const query = { _id: bomId };
   if (isEditing) query.owner = this.userId;
 
   // Run a separate query for the actual comments vs. the one we use for the count as the counter
   // modifies the query, omitting any fields other than _id.
-  Counts.publish(this, 'documents.view.commentCount', Comments.find({ documentId }));
-  const comments = Comments.find({ documentId });
+  Counts.publish(this, 'boms.view.commentCount', Comments.find({ bomId }));
+  const comments = Comments.find({ bomId });
 
   return [
     Boms.find(query),

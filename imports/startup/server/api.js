@@ -1,3 +1,4 @@
+import '../../api/Documents/methods';
 import '../../api/Documents/server/publications';
 
 import '../../api/OAuth/server/methods';
@@ -19,3 +20,6 @@ import '../../api/Comments/methods';
 
 import '../../api/Boms/server/publications';
 import '../../api/Boms/methods';
+
+import '../../api/Files/methods';
+import '../../api/Files/server/publications';

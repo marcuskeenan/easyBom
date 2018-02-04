@@ -97,7 +97,7 @@ const getPartName = (cell, row) => {
   const man = row.manufacturer;
   const mpn = row.manPartNumber;
   const text = `By: ${man}\nPart #: ${mpn}`
-  const newText = text.split ('\n').map ((item, i) => <p key={i}>  {item}</p>);
+  const newText = text.split('\n').map ((item, i) => <p key={i}>  {item}</p>);
   return <div><Link to={{ pathname: `/parts/${id}` }}>{name}</Link><br />
             {newText}
          </div>;
@@ -272,7 +272,7 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
             <hr />
             <div className="float-md-right pull-right">
               <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={popoverHoverAdd}>
-                <Button className="btn btn-primary">
+                <Button className="btn btn-primary" onClick={() => history.push(`${match.url}/bomaddparts`)}>
                   <i className="fa fa-plus fa-md" /> Add Parts
                 </Button>
               </OverlayTrigger>

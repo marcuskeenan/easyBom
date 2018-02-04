@@ -51,28 +51,28 @@ Boms.schema = new SimpleSchema({
   },
   'parts.$': {
     type: Object,
-    label: 'A user who has favorited this document.',
+    label: 'A user who has favorited this bom.',
   },
   'parts.$.id': {
     type: String,
-    label: 'A user who has favorited this document.',
+    label: 'A user who has favorited this bom.',
   },
   'parts.$.quantity': {
     type: Number,
-    label: 'A user who has favorited this document.',
+    label: 'A user who has favorited this bom.',
   },
   favorites: {
     type: Array,
-    label: 'Users who have favorited this document.',
+    label: 'Users who have favorited this bom.',
     defaultValue: [],
   },
   'favorites.$': {
     type: String,
-    label: 'A user who has favorited this document.',
+    label: 'A user who has favorited this bom.',
   },
   tags: {
     type: Array,
-    label: 'The tags for the document.',
+    label: 'The tags for the bom.',
     defaultValue: [],
     optional: true,
   },

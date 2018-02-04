@@ -1,5 +1,7 @@
 {
   "public": {},
+  "AWSAccessKeyId": "<Paste Your Access Key ID Here>",
+  "AWSSecretAccessKey": "<Paste Your Secret Access Key Here",
   "private": {
     "MAIL_URL": "",
     "OAuth": {
