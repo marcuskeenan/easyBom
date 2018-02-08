@@ -41,11 +41,13 @@ const options = {
 
 const linkFormatter = (cell, row) => (<Link to={`parts/${row._id}`}>{cell}</Link>);
 
-const priceFormatter = (cell) => {
-  if (isNaN(`${cell}`)) {
+
+const priceFormatter = (value) => {
+  if (isNaN(`${value}`)) {
     return 'no cost listed';
   }
-  return `<i>$</i>${cell}`;
+  const formatedValue = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `$${formatedValue}`;
 };
 
 

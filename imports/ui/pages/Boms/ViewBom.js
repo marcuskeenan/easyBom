@@ -76,7 +76,7 @@ const cellEditProp = {
   blurToSave: true,
   beforeSaveCell: onBeforeSaveCell, // a hook for before saving cell
   afterSaveCell: onAfterSaveCell,
-   // a hook for after saving cell
+  // a hook for after saving cell
 };
 
 const selectRow = {
@@ -90,36 +90,32 @@ const options = {
 };
 
 
-
 const getPartName = (cell, row) => {
   const name = cell;
   const id = row.id;
   const man = row.manufacturer;
   const mpn = row.manPartNumber;
-  const text = `By: ${man}\nPart #: ${mpn}`
-  const newText = text.split('\n').map ((item, i) => <p key={i}>  {item}</p>);
-  return <div><Link to={{ pathname: `/parts/${id}` }}>{name}</Link><br />
-            {newText}
-         </div>;
+  const text = `By: ${man}\nPart #: ${mpn}`;
+  const newText = text.split('\n').map((item, i) => <p key={i}>  {item}</p>);
+  return (<div><Link to={{ pathname: `/parts/${id}` }}>{name}</Link><br />
+    {newText}
+          </div>);
 };
 
-const imageFormatter = (url) => {
-  return <img className="img-tn" src={url} alt="pic" />;
-};
+const imageFormatter = url => <img className="img-tn" src={url} alt="pic" />;
 
 const priceFormatter = (value) => {
   if (isNaN(`${value}`)) {
     return 'no cost listed';
   }
-  const formatedValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const formatedValue = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return `$${formatedValue}`;
 };
 
-
 const onAfterSaveCell = (row, cellName, cellValue) => {
-  //this.setState(this.state);
-  //getPartsData(this.state.data);
-}
+  // this.setState(this.state);
+  // getPartsData(this.state.data);
+};
 
 function onBeforeSaveCell(row, cellName, cellValue) {
   const bomId = row.bomId;
@@ -128,7 +124,7 @@ function onBeforeSaveCell(row, cellName, cellValue) {
   console.log(`the part object is ${part}`);
 
   Meteor.call('boms.updatePart', bomId, part, (error) => {
-    console.log("boms updatePart called from client");
+    console.log('boms updatePart called from client');
     if (error) {
       Bert.alert(error.reason, 'danger');
       console.log("The update didn't work");
@@ -138,71 +134,68 @@ function onBeforeSaveCell(row, cellName, cellValue) {
   return true;
 }
 
-function onAfterDeleteRow(rowKeys)  {
-
+function onAfterDeleteRow(rowKeys) {
   Meteor.call('boms.deletePart', this.doc._id, rowKeys, (error) => {
     if (error) {
       Bert.alert(error.reason, 'danger');
       console.log("The update didn't work");
     }
   });
-  alert('The rowkey you drop: ' + rowKeys);
+  alert(`The rowkey you drop: ${rowKeys}`);
 }
 
 const handleDeleteRow = (bomId, rowKeys, name) => {
   const r = confirm(`Are you sure you want to remove ${name} from this BOM?`);
-    if (r == true) {
-        Meteor.call('boms.deletePart', bomId, rowKeys, (error) => {
-          if (error) {
-            Bert.alert(error.reason, 'danger');
-          }
-        });
-    } else {
-      return;
-    }
+  if (r == true) {
+    Meteor.call('boms.deletePart', bomId, rowKeys, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      }
+    });
+  } else {
 
-
-}
+  }
+};
 
 const renderDeleteButton = (cell, row) => {
   const bomId = row.bomId;
   const rowKey = [row.id];
   const name = row.name;
-  return <Button
-          className="btn btn-xs btn-danger"
-          onClick={() => handleDeleteRow(bomId, rowKey, name)}>
-          <i className={`fa fa-trash-o`}  />
-         </Button>
-}
+  return (<Button
+    className="btn btn-xs btn-danger"
+    onClick={() => handleDeleteRow(bomId, rowKey, name)}
+  >
+    <i className="fa fa-trash-o" />
+          </Button>);
+};
 
 const getPartsData = (doc) => {
   const bomId = doc._id;
   const parts = doc.parts;
   const data = [];
-  parts.map(p => {
+  parts.map((p) => {
     const part = Parts.findOne({ _id: p.id });
     const quantity = p.quantity;
     const row = {
-      bomId: bomId,
+      bomId,
       id: p.id,
       image: part.imageURL,
       name: part.name,
       manufacturer: part.manufacturer,
       manPartNumber: part.manPartNumber,
       cost: priceFormatter(part.cost),
-      quantity: quantity,
+      quantity,
       total: priceFormatter(parseFloat(part.cost * quantity).toFixed(2)),
-    }
+    };
     console.log(row);
     data.push(row);
-
   });
   return data;
-}
+};
 
 const getPartsTotalCost = (doc) => {
 
-}
+};
 
 const renderBom = (doc, commentCount, comments, hasFavorited, match, history, tags, createdAt, updatedAt) => (doc ? (
   <div className="ViewBom">
@@ -251,19 +244,19 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
               options={options}
               search
               multiColumnSearch
-              bordered={ false }
+              bordered={false}
               exportCSV
             >
               <TableHeaderColumn dataField="id" isKey hidden searchable={false} export>id</TableHeaderColumn>
               <TableHeaderColumn dataField="bomId" hidden searchable={false}>bomId</TableHeaderColumn>
-              <TableHeaderColumn width="15%" dataField="image" dataFormat={imageFormatter} dataAlign='left' editable={false}>Part</TableHeaderColumn>
-              <TableHeaderColumn width="30%" dataField="name" hiden dataSort dataFormat={getPartName} dataAlign='left' editable={false}></TableHeaderColumn>
-              <TableHeaderColumn width="0%" dataField="manufacturer" hidden dataSort dataAlign='left' editable={false}>Manufacturer</TableHeaderColumn>
-              <TableHeaderColumn width="0%" dataField="manPartNumber" hidden dataSort dataAlign='left' editable={false}>MPN</TableHeaderColumn>
-              <TableHeaderColumn width="15%" dataField="cost" dataSort dataAlign='right' editable={false}>Cost</TableHeaderColumn>
-              <TableHeaderColumn width="15%" dataField="quantity" editable={ { type: 'text' } } dataSort dataAlign='center' >Qty</TableHeaderColumn>
-              <TableHeaderColumn width="15%" dataField="total" dataSort dataAlign='right' editable={false}>Total</TableHeaderColumn>
-              <TableHeaderColumn width="10%" dataField="id" dataFormat={renderDeleteButton} dataAlign='right'></TableHeaderColumn>
+              <TableHeaderColumn width="15%" dataField="image" dataFormat={imageFormatter} dataAlign="left" editable={false}>Part</TableHeaderColumn>
+              <TableHeaderColumn width="30%" dataField="name" hiden dataSort dataFormat={getPartName} dataAlign="left" editable={false} />
+              <TableHeaderColumn width="0%" dataField="manufacturer" hidden dataSort dataAlign="left" editable={false}>Manufacturer</TableHeaderColumn>
+              <TableHeaderColumn width="0%" dataField="manPartNumber" hidden dataSort dataAlign="left" editable={false}>MPN</TableHeaderColumn>
+              <TableHeaderColumn width="15%" dataField="cost" dataSort dataAlign="right" editable={false}>Cost</TableHeaderColumn>
+              <TableHeaderColumn width="15%" dataField="quantity" editable={{ type: 'text' }} dataSort dataAlign="center" >Qty</TableHeaderColumn>
+              <TableHeaderColumn width="15%" dataField="total" dataSort dataAlign="right" editable={false}>Total</TableHeaderColumn>
+              <TableHeaderColumn width="10%" dataField="id" dataFormat={renderDeleteButton} dataAlign="right" />
             </BootstrapTable>
 
           </div>

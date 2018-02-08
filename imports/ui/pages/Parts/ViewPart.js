@@ -46,6 +46,14 @@ const popoverHoverFavorite = (
   </Popover>
 );
 
+const priceFormatter = (value) => {
+  if (isNaN(`${value}`)) {
+    return 'no cost listed';
+  }
+  const formatedValue = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `$${formatedValue}`;
+};
+
 const renderPart = (doc, commentCount, comments, hasFavorited, match, history, tags,) => (doc ? (
   <div className="ViewPart">
     <div className="page-header clearfix">
@@ -62,7 +70,7 @@ const renderPart = (doc, commentCount, comments, hasFavorited, match, history, t
                 <h5 className="card-text"><strong>Manufacturer:</strong> { doc && doc.manufacturer }</h5>
                 <h5 className="card-text"><strong>MPC:</strong> { doc && doc.manPartNumber }</h5>
                 <h5 className="card-text"><strong>Vendor:</strong> { doc && doc.vendor }</h5>
-                <h5 className="card-text"><strong>Cost:</strong> ${ doc && doc.cost}</h5>
+                <h5 className="card-text"><strong>Cost:</strong> {priceFormatter(doc && doc.cost)}</h5>
 
               </div>
             </div>
