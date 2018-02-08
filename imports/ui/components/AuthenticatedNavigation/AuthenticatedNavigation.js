@@ -63,17 +63,17 @@ class AuthenticatedNavigation extends React.Component {
           </LinkContainer>
           <LinkContainer to="/customers">
             <NavItem eventKey={1.2} href="/customers">Devices</NavItem>
-          </LinkContainer>
-          <NavDropdown eventKey={2} title="Parts Catalog" id="user-nav-dropdown">
+            </LinkContainer>
+          
             <LinkContainer to="/parts">
               <NavItem eventKey={1.2} href="/parts"><i className="fa fa-list fa-fw" /> Parts</NavItem>
             </LinkContainer>
-          </NavDropdown>
-          <NavDropdown eventKey={3} title="BOMS" id="user-nav-dropdown">
+          
+          
             <LinkContainer to="/boms">
-              <NavItem eventKey={3.1} href="/boms">BOMS</NavItem>
+              <NavItem eventKey={3.1} href="/boms"><i className="fa fa-list fa-fw" /> BOMS</NavItem>
             </LinkContainer>
-          </NavDropdown>
+         
 
         </Nav>
         <Nav pullRight>
