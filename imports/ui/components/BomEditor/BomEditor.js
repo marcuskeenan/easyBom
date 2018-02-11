@@ -15,22 +15,28 @@ class BomEditor extends React.Component {
         name: {
           required: true,
         },
-        description: {
+        version: {
           required: true,
         },
-        parts: {
-          required: false,
+        company: {
+          required: true,
+        },
+        description: {
+          required: true,
         },
       },
       messages: {
         name: {
           required: 'Need a name in here, Seuss.',
         },
+        version: {
+          required: 'Please add bom version.',
+        },
+        company: {
+          required: true,
+        },
         description: {
           required: 'Please add bom description.',
-        },
-        parts: {
-          required: 'Please add parts',
         },
       },
       submitHandler() { component.handleSubmit(); },
@@ -43,8 +49,9 @@ class BomEditor extends React.Component {
     const methodToCall = existingBom ? 'boms.update' : 'boms.insert';
     const doc = {
       name: this.name.value.trim(),
+      company: this.company.value.trim(),
       description: this.description.value.trim(),
-      //parts: JSON.stringify(this.parts.value.trim()),
+      version: this.version.value.trim(),
     };
 
     if (existingBom) doc._id = existingBom;
@@ -78,6 +85,28 @@ class BomEditor extends React.Component {
           />
         </FormGroup>
         <FormGroup>
+          <ControlLabel>Version</ControlLabel>
+          <input
+            type="text"
+            className="form-control"
+            name="version"
+            ref={version => (this.version = version)}
+            defaultValue={doc && doc.version}
+            placeholder=""
+          />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Company</ControlLabel>
+          <input
+            type="text"
+            className="form-control"
+            name="version"
+            ref={company => (this.company = company)}
+            defaultValue={doc && doc.company}
+            placeholder=""
+          />
+        </FormGroup>
+        <FormGroup>
           <ControlLabel>Description</ControlLabel>
           <textarea
             rows="10"
@@ -99,7 +128,7 @@ class BomEditor extends React.Component {
 
 BomEditor.defaultProps = {
   doc: {
-    name: '', description: '',
+    name: '', description: '', version: '', company:''
   },
 };
 

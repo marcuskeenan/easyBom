@@ -75,6 +75,7 @@ const Boms = ({
       >
         <TableHeaderColumn dataField="_id" isKey searchable={false} hidden export>Bom ID</TableHeaderColumn>
         <TableHeaderColumn width="30%" dataField="name" dataFormat={linkFormatter}>Bom Name</TableHeaderColumn>
+        <TableHeaderColumn width="10%" dataField="version">Version</TableHeaderColumn>
         <TableHeaderColumn width="50%" dataField="description">Description</TableHeaderColumn>
         <TableHeaderColumn width="20%" dataField="owner" dataFormat={getOwnerName} dataSort>Owner</TableHeaderColumn>
         <TableHeaderColumn width="20%" dataField="createdAt" dataFormat={formatTimeAgo}dataSort>Created</TableHeaderColumn>

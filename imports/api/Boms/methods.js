@@ -9,6 +9,8 @@ Meteor.methods({
     check(doc, {
       name: String,
       description: String,
+      version: String,
+      company: String,
       // tags: Array,
       // parts: Array
     });
@@ -25,6 +27,8 @@ Meteor.methods({
       _id: String,
       name: String,
       description: String,
+      version: String,
+      company: String,
       // tags: Array,
       // parts: Array,
     });

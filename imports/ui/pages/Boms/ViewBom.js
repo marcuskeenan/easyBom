@@ -104,6 +104,7 @@ const getPartName = (cell, row) => {
 
 const imageFormatter = url => <img className="img-tn" src={url} alt="pic" />;
 
+
 const priceFormatter = (value) => {
   if (isNaN(`${value}`)) {
     return 'no cost listed';
@@ -193,8 +194,24 @@ const getPartsData = (doc) => {
   return data;
 };
 
+// The function below needs to be fixed, the band-aid is checking to make sure it is not not a number. Why the extra loop?
 const getPartsTotalCost = (doc) => {
-
+  const bomId = doc._id;
+  const parts = doc.parts;
+  let data = 0;
+  parts.forEach((p) => {
+    const part = Parts.findOne({ _id: p.id });
+    const quantity = p.quantity;
+    const total = part.cost * quantity;
+    console.log(total);
+    if(total != NaN) {
+      data += total;
+      console.log(data);
+    }
+    
+  });
+  
+  return priceFormatter(parseFloat(data));
 };
 
 const renderBom = (doc, commentCount, comments, hasFavorited, match, history, tags, createdAt, updatedAt) => (doc ? (
@@ -208,11 +225,12 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
               <div className="card-block">
                 <h3 className="card-title">{ doc && doc.name }</h3>
                 <h5 className="card-text"><strong>Description:</strong></h5><p> { doc && doc.description }</p>
+                <h5 className="card-text"><strong>Version:</strong> v{ doc && doc.version}</h5>
                 <h5 className="card-text"><strong>Owner:</strong> { doc && getOwnerName(doc.owner) }</h5>
-                <h5 className="card-text"><strong>Company:</strong> { doc && getOwnerCompany(doc.owner) }</h5>
+                <h5 className="card-text"><strong>Company:</strong> { doc && doc.company }</h5>
                 <h5 className="card-text"><strong>Created At:</strong> { doc && monthDayYearAtTime(doc.createdAt)}</h5>
                 <h5 className="card-text"><strong>Updated At:</strong> { doc && timeago(doc.updatedAt) }</h5>
-                <h5 className="card-text"><strong>Cost:</strong> ${ doc && doc.cost}</h5>
+                <h5 className="card-text"><strong>Cost:</strong> { doc && getPartsTotalCost(doc)}</h5>
 
               </div>
             </div>

@@ -22,6 +22,10 @@ Boms.schema = new SimpleSchema({
     type: String,
     label: 'The ID of the user this BOM belongs to.',
   },
+  version: {
+    type: String,
+    label: 'version',
+  },
   createdAt: {
     type: String,
     label: 'The date this BOM was created.',
@@ -43,6 +47,10 @@ Boms.schema = new SimpleSchema({
   description: {
     type: String,
     label: 'The body of the BOM.',
+  },
+  company: {
+    type: String,
+    label: 'company.',
   },
   parts: {
     type: Array,
