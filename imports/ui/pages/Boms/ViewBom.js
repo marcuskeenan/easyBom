@@ -230,7 +230,7 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
                 <h5 className="card-text"><strong>Company:</strong> { doc && doc.company }</h5>
                 <h5 className="card-text"><strong>Created At:</strong> { doc && monthDayYearAtTime(doc.createdAt)}</h5>
                 <h5 className="card-text"><strong>Updated At:</strong> { doc && timeago(doc.updatedAt) }</h5>
-                <h5 className="card-text"><strong>Cost:</strong> { doc && getPartsTotalCost(doc)}</h5>
+                <h5 className="card-text"><strong>Materials Cost:</strong> { doc && getPartsTotalCost(doc)}</h5>
 
               </div>
             </div>
@@ -258,7 +258,7 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
               data={getPartsData(doc)}
 
               cellEdit={cellEditProp}
-              selectRow={selectRow}
+              // selectRow={selectRow}
               options={options}
               search
               multiColumnSearch
@@ -268,11 +268,11 @@ const renderBom = (doc, commentCount, comments, hasFavorited, match, history, ta
               <TableHeaderColumn dataField="id" isKey hidden searchable={false} export>id</TableHeaderColumn>
               <TableHeaderColumn dataField="bomId" hidden searchable={false}>bomId</TableHeaderColumn>
               <TableHeaderColumn width="15%" dataField="image" dataFormat={imageFormatter} dataAlign="left" editable={false}>Part</TableHeaderColumn>
-              <TableHeaderColumn width="30%" dataField="name" hiden dataSort dataFormat={getPartName} dataAlign="left" editable={false} />
-              <TableHeaderColumn width="0%" dataField="manufacturer" hidden dataSort dataAlign="left" editable={false}>Manufacturer</TableHeaderColumn>
-              <TableHeaderColumn width="0%" dataField="manPartNumber" hidden dataSort dataAlign="left" editable={false}>MPN</TableHeaderColumn>
+              <TableHeaderColumn width="30%" dataField="name" dataSort dataFormat={getPartName} dataAlign="left" editable={false} />
+              <TableHeaderColumn width="0%" dataField="manufacturer" dataSort dataAlign="left" editable={false}>Manufacturer</TableHeaderColumn>
+              <TableHeaderColumn width="0%" dataField="manPartNumber" dataSort dataAlign="left" editable={false}>MPN</TableHeaderColumn>
               <TableHeaderColumn width="15%" dataField="cost" dataSort dataAlign="right" editable={false}>Cost</TableHeaderColumn>
-              <TableHeaderColumn width="15%" dataField="quantity" editable={{ type: 'text' }} dataSort dataAlign="center" >Qty</TableHeaderColumn>
+              <TableHeaderColumn width="15%" dataField="quantity" editable={{ type: 'text' }} dataSort dataAlign="center">Qty</TableHeaderColumn>
               <TableHeaderColumn width="15%" dataField="total" dataSort dataAlign="right" editable={false}>Total</TableHeaderColumn>
               <TableHeaderColumn width="10%" dataField="id" dataFormat={renderDeleteButton} dataAlign="right" />
             </BootstrapTable>
