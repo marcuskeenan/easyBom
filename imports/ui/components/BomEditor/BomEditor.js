@@ -128,7 +128,7 @@ class BomEditor extends React.Component {
 
 BomEditor.defaultProps = {
   doc: {
-    name: '', description: '', version: '', company:''
+    name: '', description: '', version: '', company: '',
   },
 };
 

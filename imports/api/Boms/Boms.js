@@ -69,6 +69,11 @@ Boms.schema = new SimpleSchema({
     type: Number,
     label: 'A user who has favorited this bom.',
   },
+  total: {
+    type: String,
+    label: 'The total price of the invoice when it was sent in cents.',
+    optional: true,
+  },
   favorites: {
     type: Array,
     label: 'Users who have favorited this bom.',

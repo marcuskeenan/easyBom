@@ -1,8 +1,34 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import Boms from './Boms';
+import Parts from '../Parts/Parts';
 import Notifications from '../Notifications/Notifications';
 import rateLimit from '../../modules/rate-limit';
+
+const priceFormatter = (value) => {
+  if (isNaN(`${value}`)) {
+    return 'no cost listed';
+  }
+  const formatedValue = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `$${formatedValue}`;
+};
+
+const totalParts = (bomId) => {
+  const bom = Boms.findOne({ _id: bomId });
+  const parts = bom.parts;
+  let data = 0;
+  parts.forEach((p) => {
+    const part = Parts.findOne(p.id);
+    const total = part.cost * p.quantity;
+    
+    if (total != NaN) {
+      data += total;
+      console.log(data);
+    }
+  });
+  return priceFormatter(parseFloat(data));
+};
+
 
 Meteor.methods({
   'boms.insert': function bomsInsert(doc) {
@@ -11,6 +37,7 @@ Meteor.methods({
       description: String,
       version: String,
       company: String,
+      
       // tags: Array,
       // parts: Array
     });
@@ -29,6 +56,7 @@ Meteor.methods({
       description: String,
       version: String,
       company: String,
+
       // tags: Array,
       // parts: Array,
     });
@@ -36,6 +64,7 @@ Meteor.methods({
     try {
       const bomId = doc._id;
       Boms.update(bomId, { $set: doc });
+      Boms.update(bomId, { $set: { total: totalParts(bomId) } });
       return bomId; // Return _id so we can redirect to bom after update.
     } catch (exception) {
       throw new Meteor.Error('500', exception);
@@ -94,6 +123,7 @@ Meteor.methods({
     try {
       //  console.log(`the bom id is ${bomId}, the part id is ${part.id} and the qty is ${part.quantity}`);
       Boms.update({ _id: bomId, 'parts.id': part.id }, { $set: { 'parts.$.quantity': part.quantity } });
+      Boms.update(bomId, { $set: { total: totalParts(bomId) } });
       console.log('done');
     } catch (exception) {
       console.warn(exception);
@@ -104,7 +134,7 @@ Meteor.methods({
     check(bomId, String);
     check(rowKeys, Array);
     try {
-      rowKeys.forEach(function(element) {
+      rowKeys.forEach((element) => {
         console.log(element);
         Boms.update({ _id: bomId }, { $pull: { parts: { id: element } } } );
         console.log('done');
